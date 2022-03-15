@@ -65,24 +65,41 @@ public class Board
        */
         public void drawBoard()
         {
+            int number = 1;
+            for (int i = 0; i < spaces[0].length; i++) // numbers top columns
+            {
+                System.out.print("  " + number);
+                number++;
+                if (i == spaces[0].length - 1)
+                {
+                    System.out.println();
+                }
+            }
+
             for (int i = 0; i < spaces.length; i++) // rows
             {
-                for (int j = 0; j < spaces[0].length; i++) // columns
+                for (int j = 0; j < spaces[0].length; j++) // columns
                 {
                     if (j == 0)
                     {
                         System.out.print("|  |");
                     }
-                    else if (j == spaces[0].length - 1)
-                    {
-                        System.out.println();
-                    }
                     else
                     {
-                        System.out.println("  |");
+                        System.out.print("  |");
                     }
-                    System.out.print(" ");
+                    if (j == spaces[0].length - 1)
+                    {
+                        System.out.println();
+
+                        for (int k = 0; k < spaces[0].length; k++)
+                        {
+                            System.out.print("---");
+                        }
+                        System.out.println("-");
+                    }
                 }
+
             }
         }
 
