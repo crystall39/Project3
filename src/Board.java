@@ -116,41 +116,22 @@ public class Board
      * @param player  the Player taking the turn and attempting to "occupy" the space.
      * @return  true if the move was successful and the space occupied; return false otherwise.
      */
-      public boolean recordMove(int spaceNum, Player player)
+      public boolean recordMove(int columnNum, Player player)
       {
-          // if the user selected a space below 1 or greater than the last
-          // number the board, immediately return false
-          if (spaceNum < 1 || spaceNum > boardSize * boardSize)
+          if (columnNum < 1 || columnNum > spaces[0].length)
           {
               return false;
           }
 
-          int count = 0;
-          int rowNum = 0;
-          int colNum = 0;
-
-          // count through and get the correct index associated with spaceNum
-          for (int row = 0; row < spaces.length; row++)
+          for (int i = spaces.length - 1; i > -1; i--) // rows
           {
-              for (int col = 0; col < spaces[0].length; col++)
+              if (Space.BLANK != spaces[i][columnNum].getSymbol())
               {
-                  count++;
-
-                  if (count == spaceNum)
-                  {
-                      rowNum = row;
-                      colNum = col;
-                      break;
-                  }
+                  spaces[i][columnNum].occupySpace(player.getSymbol());
+                  return true;
               }
           }
-          // try to occupy the space with the Player's symbol, which updates
-          // the symbol if the space is currently a numbered "blank" space (and returns true);
-          // if the space is already occupied, return false
-          String symbol = player.getSymbol();
-          boolean spaceSuccessfullyOccupied = spaces[rowNum][colNum].occupySpace(symbol);
-
-          return spaceSuccessfullyOccupied;
+          return false;
       }
 
     /**
@@ -223,39 +204,7 @@ public class Board
      */
       private String checkRows()
       {
-          // check each of the ROWS by traversing row-major order and comparing each symbol with the one
-          // that comes after it in the row; early return the moment a winning row is determined
-          for (int row = 0; row < spaces.length; row++)
-          {
-              String firstSymbolInRow = spaces[row][0].getSymbol();
 
-              // boolean for tracking if all symbols in the row match (i.e. a win);
-              // start it as true, then switch to false when we get a non-matching symbol
-              boolean winningRow = true;
-
-              // we can start at col = 1 since we are using col = 0 as first symbol
-              for (int col = 1; col < spaces[0].length; col++)
-              {
-                  // get the next symbolin the row
-                  String nextSymbol = spaces[row][col].getSymbol();
-
-                  // if the two symbols are NOT the same, set winningRow to false
-                  if (!firstSymbolInRow.equals(nextSymbol))
-                  {
-                      winningRow = false;
-                  }
-              }
-
-                // if this particular row had all symbols the same, then we have a winner!
-                // immediately return early with the String of the winning symbol
-              if (winningRow)
-              {
-                  return firstSymbolInRow;
-              }
-          }
-
-          // if we get here, then that means there were no winning rows, so return a BLANK
-          return Space.BLANK;
       }
 
     /**
@@ -267,40 +216,7 @@ public class Board
      */
       private String checkColumns()
       {
-      // check each of the COLUMNS by traversing column-major order and comparing each symbol with the one
-      // that comes after it in the column; early return the moment a winning column is determined
-          for (int col = 0; col < spaces[0].length; col++)
-          {
-              // get the first symbol in the column
-              String firstSymbolInColumn = spaces[0][col].getSymbol();
 
-              // boolean for tracking if all symbols in the column match (i.e. a win);
-              // start it as true, then switch to false when we get a non-matching symbol
-              boolean winningColumn = true;
-
-              // we can start at row = 1 since we are using row = 0 as first symbol
-              for (int row = 1; row < spaces.length; row++)
-              {
-                  // get the next symbol in the column
-                  String nextSymbol = spaces[row][col].getSymbol();
-
-                  // if the two symbols are NOT the same, set winningRow to false
-                  if (!firstSymbolInColumn.equals(nextSymbol))
-                  {
-                      winningColumn = false;
-                  }
-              }
-
-              // if this particular column had all symbols the same, then we have a winner!
-              // immediately return early with the String of the winning symbol
-              if (winningColumn)
-              {
-                return firstSymbolInColumn;
-              }
-          }
-
-        // if we get here, then that means there were no winning columns, so return a BLANK
-        return Space.BLANK;
       }
 
     /**
@@ -312,63 +228,6 @@ public class Board
      */
       private String checkDiagonals()
       {
-          /* CHECK TOP LEFT to BOTTOM RIGHT DIAGONAL FIRST: */
 
-          // get the first symbol on the diagonal (top-left index)
-          String firstSymbol = spaces[0][0].getSymbol();
-
-          // boolean for tracking if all symbols in the diagonal match (i.e. a win);
-          // start it as true, then switch to false when we get a non-matching symbol
-          boolean winningDiag = true;
-
-          // set a single for loop to iterate; start at 1 since we manually took out [0][0] above
-          for (int count = 1; count < boardSize; count++)
-          {
-              //get the next symbol on the diagonal, e.g. [1][1], then [2][2], then [3][3], etc.
-              String nextSymbol = spaces[count][count].getSymbol();
-
-              // if the two symbols are NOT the same, set winningDiag to false
-              if (!firstSymbol.equals(nextSymbol))
-              {
-                  winningDiag = false;
-              }
-          }
-          // if this diagonal had all symbols the same, then we have a winner!
-          // immediately return early with the String of the winning symbol
-          if (winningDiag)
-          {
-              return firstSymbol;
-          }
-
-          /* CHECK TOP RIGHT to BOTTOM LEFT DIAGONAL SECOND: */
-
-          // get the first symbol on the diagonal (top-right index)
-          firstSymbol = spaces[0][boardSize - 1].getSymbol();
-
-          winningDiag = true;
-
-          // set a single for loop to iterate; start at 1 since we manually took out first symbol above
-          for (int count = 1; count < boardSize; count++)
-          {
-              //get the next symbol on the diagonal
-              // for example, for 6x6 grid, the symbol at [0][5] is manually retrieved above,
-              // then this loop checks it agains [1][4], then [2][3], then [3][2], etc.
-              String nextSymbol = spaces[count][boardSize - count - 1].getSymbol();
-
-              // if the two symbols are NOT the same, set winningDiag to false
-              if (!firstSymbol.equals(nextSymbol))
-              {
-                  winningDiag = false;
-              }
-          }
-          // if this diagonal had all symbols the same, then we have a winner!
-          // immediately return early with the String of the winning symbol
-          if (winningDiag)
-          {
-              return firstSymbol;
-          }
-
-          /* if we get here, then that means there were no winning diagonal, so return a BLANK */
-          return Space.BLANK;
       }
 }
