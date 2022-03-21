@@ -1,9 +1,11 @@
+import java.util.Arrays;
+
 // class for the tic tac toe board (grid); the methods in this class
 // draw the grid, updates it with eeach move, and check for a winner
 public class Board
 {
     // spaces on the Board (2D array of Space objects)
-    private Space[][] spaces;
+    private String[][] spaces;
 
     private int boardSize;
 
@@ -16,7 +18,7 @@ public class Board
           boardSize = size;
 
           // initialize the spaces 2D array
-          spaces = new Space[size][size];
+          spaces = new String[size][size];
 
           // set each space in the spaces 2d array to a new Space object
           // which has a "blank" as the default symbol
@@ -24,14 +26,14 @@ public class Board
           {
               for (int col = 0; col < spaces[0].length; col++)
               {
-                  spaces[row][col] = new Space();
+                  spaces[row][col] = "  ";
               }
           }
       }
 
       // getter method which allows the client to specify
       // which specific Space to return
-      public Space getSpace(int row, int col)
+      public String getSpace(int row, int col)
       {
           // check to make sure the requested Space is in bounds!
           if (row >= 0 && row < spaces.length && col >= 0 && col < spaces[0].length)
@@ -65,41 +67,46 @@ public class Board
        */
         public void drawBoard()
         {
-            int number = 1;
-            for (int i = 0; i < spaces[0].length; i++) // numbers top columns
+//            int number = 1;
+//            for (int i = 0; i < spaces[0].length; i++) // numbers top columns
+//            {
+//                System.out.print("  " + number);
+//                number++;
+//                if (i == spaces[0].length - 1)
+//                {
+//                    System.out.println();
+//                }
+//            }
+//
+//            for (int i = 0; i < spaces.length; i++) // rows
+//            {
+//                for (int j = 0; j < spaces[0].length; j++) // columns
+//                {
+//                    if (j == 0)
+//                    {
+//                        System.out.print("|  |");
+//                    }
+//                    else
+//                    {
+//                        System.out.print("  |");
+//                    }
+//                    if (j == spaces[0].length - 1)
+//                    {
+//                        System.out.println();
+//
+//                        for (int k = 0; k < spaces[0].length; k++)
+//                        {
+//                            System.out.print("---");
+//                        }
+//                        System.out.println("-");
+//                    }
+//                }
+//
+//            }
+            for (int i = 0; i < spaces.length; i++)
             {
-                System.out.print("  " + number);
-                number++;
-                if (i == spaces[0].length - 1)
-                {
-                    System.out.println();
-                }
-            }
-
-            for (int i = 0; i < spaces.length; i++) // rows
-            {
-                for (int j = 0; j < spaces[0].length; j++) // columns
-                {
-                    if (j == 0)
-                    {
-                        System.out.print("|  |");
-                    }
-                    else
-                    {
-                        System.out.print("  |");
-                    }
-                    if (j == spaces[0].length - 1)
-                    {
-                        System.out.println();
-
-                        for (int k = 0; k < spaces[0].length; k++)
-                        {
-                            System.out.print("---");
-                        }
-                        System.out.println("-");
-                    }
-                }
-
+                System.out.print(Arrays.toString(spaces[i]));
+                System.out.println();
             }
         }
 
@@ -112,7 +119,7 @@ public class Board
      * space was outside therange, OR the space was ALREADY occupied by the opposite player), then
      * return false to indicate the space was NOT occupied.
      *
-     * @param spaceNum  the selected space of the space to be occupied by player.
+     * @param columnNum  the selected space of the space to be occupied by player.
      * @param player  the Player taking the turn and attempting to "occupy" the space.
      * @return  true if the move was successful and the space occupied; return false otherwise.
      */
@@ -125,9 +132,9 @@ public class Board
 
           for (int i = spaces.length - 1; i > -1; i--) // rows
           {
-              if (Space.BLANK != spaces[i][columnNum].getSymbol())
+              if (spaces[i][columnNum].equals("  ")) //empty
               {
-                  spaces[i][columnNum].occupySpace(player.getSymbol());
+                  spaces[i][columnNum] = (player.getSymbol() + Player.RESET_COLOR);
                   return true;
               }
           }
@@ -141,11 +148,11 @@ public class Board
      */
       public boolean isFull()
       {
-          for (Space[] row : spaces)
+          for (String[] row : spaces)
           {
-              for (Space space : row)
+              for (String item : row)
               {
-                  if (space.getSymbol() == Space.BLANK)
+                  if (item.equals("  "))
                   {
                       return false;
                   }
@@ -170,7 +177,7 @@ public class Board
           // CHECK ROWS FIRST:
           String rowWinner = checkRows();
 
-          if (!rowWinner.equals(Space.BLANK))
+          if (!rowWinner.equals("  "))
           {
               return rowWinner;
           }
@@ -178,7 +185,7 @@ public class Board
           // THEN LET'S CHECK COLUMNS:
           String colWinner = checkColumns();
 
-          if (!colWinner.equals(Space.BLANK))
+          if (!colWinner.equals("  "))
           {
               return colWinner;
           }
@@ -186,13 +193,13 @@ public class Board
           // FINALLY LET'S CHECK DIAGONALS:
           String diagWinner = checkDiagonals();
 
-          if (!diagWinner.equals(Space.BLANK))
+          if (!diagWinner.equals("  "))
           {
               return diagWinner;
           }
 
           // no winner so far
-          return Space.BLANK;
+          return "  ";
       }
 
     /**
@@ -204,7 +211,7 @@ public class Board
      */
       private String checkRows()
       {
-
+          return "";
       }
 
     /**
@@ -216,7 +223,7 @@ public class Board
      */
       private String checkColumns()
       {
-
+          return "";
       }
 
     /**
@@ -228,6 +235,6 @@ public class Board
      */
       private String checkDiagonals()
       {
-
+          return "";
       }
 }

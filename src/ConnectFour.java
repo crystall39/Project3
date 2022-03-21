@@ -10,10 +10,10 @@ public class ConnectFour
     
     public ConnectFour()
     {
-        setup();
+        run();
     }
 
-    public void setup()
+    public void run()
     {
         System.out.println("--------------------------------------------------------");
         System.out.println("This game requires exactly two people to play.");
@@ -34,11 +34,26 @@ public class ConnectFour
 
         // draws the board as part of setup
         board.drawBoard();
+
+        boolean keepGoing = false;
+        boolean keepGoing2 = false;
+
+        while(!keepGoing)
+        {
+            System.out.println("Player 1! " + Player.RED + ("0") + Player.RESET_COLOR + " Your turn: ");
+            int chosenSpace = scan.nextInt();
+            keepGoing = board.recordMove(chosenSpace, player1);
+        }
+
+        board.drawBoard();
+
+        while(!keepGoing2)
+        {
+            System.out.println("Player 2! " + Player.YELLOW + ("0") + Player.RESET_COLOR + " Your turn: ");
+            int chosenSpace = scan.nextInt();
+            keepGoing2 = board.recordMove(chosenSpace, player1);
+        }
+
+        board.drawBoard();
     }
-
-    public void runGame()
-    {
-
-    }
-
 }
