@@ -67,16 +67,27 @@ public class Board
        */
         public void drawBoard()
         {
-//            int number = 1;
-//            for (int i = 0; i < spaces[0].length; i++) // numbers top columns
-//            {
-//                System.out.print("  " + number);
-//                number++;
-//                if (i == spaces[0].length - 1)
-//                {
-//                    System.out.println();
-//                }
-//            }
+            int number = 1;
+            for (int i = 0; i < spaces[0].length; i++) // numbers top columns
+            {
+                if (number == 1)
+                {
+                    System.out.print("  " + number);
+                }
+                else if (number < 10)
+                {
+                    System.out.print("   " + number);
+                }
+                else
+                {
+                    System.out.print("  " + number);
+                }
+                number++;
+                if (i == spaces[0].length - 1)
+                {
+                    System.out.println();
+                }
+            }
 //
 //            for (int i = 0; i < spaces.length; i++) // rows
 //            {
@@ -110,19 +121,6 @@ public class Board
             }
         }
 
-    /**
-     * Updates a space based on a player's move by changing it from a blank space to either
-     * a an X or O (whichever symbol is associated with player)
-     * The method uses an integer (spaceIdx) to determine which space is going to be updated.
-     * Method returns TRUE if the space was successfully "occupied", which occurs via the occupySpace
-     * method on the space object; if the space was NOT successfully occupied (either because the selected
-     * space was outside therange, OR the space was ALREADY occupied by the opposite player), then
-     * return false to indicate the space was NOT occupied.
-     *
-     * @param columnNum  the selected space of the space to be occupied by player.
-     * @param player  the Player taking the turn and attempting to "occupy" the space.
-     * @return  true if the move was successful and the space occupied; return false otherwise.
-     */
       public boolean recordMove(int columnNum, Player player)
       {
           if (columnNum < 1 || columnNum > spaces[0].length)
@@ -132,20 +130,15 @@ public class Board
 
           for (int i = spaces.length - 1; i > -1; i--) // rows
           {
-              if (spaces[i][columnNum].equals("  ")) //empty
+              if (spaces[i][columnNum - 1].equals("  ")) //empty
               {
-                  spaces[i][columnNum] = (player.getSymbol() + Player.RESET_COLOR);
+                  spaces[i][columnNum - 1] = (" " + player.getSymbol() + Player.RESET_COLOR);
                   return true;
               }
           }
           return false;
       }
 
-    /**
-     *Determines whether or not the board is full (has no BLANK spaces).
-     *
-     *@return True if there are no BLANKs in any spaces.
-     */
       public boolean isFull()
       {
           for (String[] row : spaces)
@@ -161,80 +154,47 @@ public class Board
           return true;
       }
 
-    /**
-     * Determine whether or not there is a winner and if so, which symbol won;
-     * this method returns the symbol of the winning Player OR returns BLANK if no winner
-     *
-     * @return  if there IS a winning condition on the board, appropriately returns
-                the winning Player's symbol; if there is NO winning condition and no
-                current winner, this method returns BLANK
-     */
-      public String checkWinner()
+      public boolean checkWinner()
       {
           // check for a winner by iterating through the 2D array and checking if all
           // symbols in a particular row,  column, or diagonal are the same
 
           // CHECK ROWS FIRST:
-          String rowWinner = checkRows();
 
-          if (!rowWinner.equals("  "))
+          if (checkRows() == true)
           {
-              return rowWinner;
+              return true;
           }
 
-          // THEN LET'S CHECK COLUMNS:
-          String colWinner = checkColumns();
-
-          if (!colWinner.equals("  "))
+          if (checkColumns() == true)
           {
-              return colWinner;
+              return true;
           }
 
           // FINALLY LET'S CHECK DIAGONALS:
-          String diagWinner = checkDiagonals();
+          boolean diagWinner = checkDiagonals();
 
-          if (!diagWinner.equals("  "))
+          if (checkDiagonals() == true)
           {
-              return diagWinner;
+              return true;
           }
 
           // no winner so far
-          return "  ";
+          return false;
       }
 
-    /**
-     * Determines whether or not any ROW in the grid has all matching symbols
-     *
-     * @return  if there IS a winning condition in any of the ROWS, appropriately returns
-                the winning Player's symbol; if no rows have all the same symbol (i.e. no
-                winner across the rows), return a BLANK
-     */
-      private String checkRows()
+      private boolean checkRows() // true if there is
       {
-          return "";
+          return true;
       }
 
-    /**
-     * Determines whether or not any COLUMN in the grid has all matching symbols
-     *
-     * @return  if there IS a winning condition in any of the COLUMNS, appropriately returns
-                the winning Player's symbol; if no columns have all the same symbol (i.e. no
-                winner across the columns), return a BLANK
-     */
-      private String checkColumns()
+      private boolean checkColumns() // true if there is
       {
-          return "";
+          return true;
       }
 
-    /**
-     * Determines whether or not either DIAGONAL in the grid has all matching symbols
-     *
-     * @return  if there IS a winning condition in either of the diagonals, appropriately returns
-                the winning Player's symbol; if neither diagonol has all the same symbol (i.e. no
-                winner across the diagonals), return a BLANK
-     */
-      private String checkDiagonals()
+      private boolean checkDiagonals() // true if there is
       {
-          return "";
+          return true;
       }
 }

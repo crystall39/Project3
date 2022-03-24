@@ -10,10 +10,10 @@ public class ConnectFour
     
     public ConnectFour()
     {
-        run();
+        setUp();
     }
 
-    public void run()
+    public void setUp()
     {
         System.out.println("--------------------------------------------------------");
         System.out.println("This game requires exactly two people to play.");
@@ -24,36 +24,45 @@ public class ConnectFour
         System.out.println("Player one will be " + Player.RED + "0" + Player.RESET_COLOR + " and Player two will be " + Player.YELLOW + "0");
         Scanner scan = new Scanner(System.in);
 
+        players = new Player[2];
         Player player1 = new Player(Player.RED + "0");
         Player player2 = new Player(Player.YELLOW + "0");
+        players[0] = player1;
+        players[1] = player2;
 
-        System.out.print(Player.RESET_COLOR + "What size board? (6, 7, 8, 9): ");
-        int boardSize = scan.nextInt();
-
+        int boardSize = 0;
+        while (boardSize < 4) {
+            System.out.print(Player.RESET_COLOR + "What size board? (must be more than 4): ");
+            boardSize = scan.nextInt();
+        }
         board = new Board(boardSize);
 
-        // draws the board as part of setup
         board.drawBoard();
+    }
 
-        boolean keepGoing = false;
-        boolean keepGoing2 = false;
+    public void playGame()
+    {
+        Scanner scan = new Scanner(System.in);
+        boolean player1Go = false;
+        boolean player2Go = false;
 
-        while(!keepGoing)
+        while(!player1Go)
         {
-            System.out.println("Player 1! " + Player.RED + ("0") + Player.RESET_COLOR + " Your turn: ");
+            System.out.print("Player 1! " + Player.RED + ("0") + Player.RESET_COLOR + " Your turn: ");
             int chosenSpace = scan.nextInt();
-            keepGoing = board.recordMove(chosenSpace, player1);
+            player1Go = board.recordMove(chosenSpace, players[0]);
         }
 
         board.drawBoard();
 
-        while(!keepGoing2)
+        while(!player2Go)
         {
-            System.out.println("Player 2! " + Player.YELLOW + ("0") + Player.RESET_COLOR + " Your turn: ");
+            System.out.print("Player 2! " + Player.YELLOW + ("0") + Player.RESET_COLOR + " Your turn: ");
             int chosenSpace = scan.nextInt();
-            keepGoing2 = board.recordMove(chosenSpace, player1);
+            player2Go = board.recordMove(chosenSpace, players[1]);
         }
 
         board.drawBoard();
     }
+
 }
