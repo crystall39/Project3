@@ -2,10 +2,8 @@ import java.util.Scanner;
 
 public class ConnectFour
 {
-    // array of Players
     private Player[] players;
 
-    // Board object used in the game
     private Board board;
     
     public ConnectFour()
@@ -31,8 +29,9 @@ public class ConnectFour
         players[1] = player2;
 
         int boardSize = 0;
-        while (boardSize < 4) {
-            System.out.print(Player.RESET_COLOR + "What size board? (must be more than 4): ");
+        while (boardSize < 4)
+        {
+            System.out.print(Player.RESET_COLOR + "What size board? (must be 4 or more): ");
             boardSize = scan.nextInt();
         }
         board = new Board(boardSize);
@@ -45,24 +44,57 @@ public class ConnectFour
         Scanner scan = new Scanner(System.in);
         boolean player1Go = false;
         boolean player2Go = false;
+        boolean keepGoing = true;
+        boolean checkWinner = false;
 
-        while(!player1Go)
+        while (keepGoing)
         {
-            System.out.print("Player 1! " + Player.RED + ("0") + Player.RESET_COLOR + " Your turn: ");
-            int chosenSpace = scan.nextInt();
-            player1Go = board.recordMove(chosenSpace, players[0]);
+            while(!player1Go)
+            {
+                System.out.print("Player " + Player.RED + ("0") + Player.RESET_COLOR + "! Your turn: ");
+                int chosenSpace = scan.nextInt();
+                player1Go = board.recordMove(chosenSpace, players[0]);
+            }
+            player1Go = false;
+
+            board.drawBoard();
+
+            if (board.checkWinner())
+            {
+                System.out.println("Looks like we have a winner! And it's" + board.getWinner() + "!");
+                keepGoing = false;
+                checkWinner = true;
+            }
+            else if (board.isFull())
+            {
+                keepGoing = false;
+                System.out.println("Looks like no one won this time! Try again!");
+            }
+
+            if (checkWinner == false)
+            {
+                while(!player2Go)
+                {
+                    System.out.print("Player " + Player.YELLOW + ("0") + Player.RESET_COLOR + "! Your turn: ");
+                    int chosenSpace = scan.nextInt();
+                    player2Go = board.recordMove(chosenSpace, players[1]);
+                }
+                player2Go = false;
+
+                board.drawBoard();
+
+                if (board.checkWinner())
+                {
+                    System.out.println("Looks like we have a winner! And it's" + board.getWinner() + "!");
+                    keepGoing = false;
+                    checkWinner = true;
+                }
+                if (board.isFull() && checkWinner == false)
+                {
+                    keepGoing = false;
+                    System.out.println("Looks like no one won this time! Try again!");
+                }
+            }
         }
-
-        board.drawBoard();
-
-        while(!player2Go)
-        {
-            System.out.print("Player 2! " + Player.YELLOW + ("0") + Player.RESET_COLOR + " Your turn: ");
-            int chosenSpace = scan.nextInt();
-            player2Go = board.recordMove(chosenSpace, players[1]);
-        }
-
-        board.drawBoard();
     }
-
 }
