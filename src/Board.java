@@ -6,9 +6,6 @@ public class Board
 
     private int boardSize;
 
-    private String winner;
-
-
     public Board(int size)
     {
           boardSize = size;
@@ -22,12 +19,6 @@ public class Board
                   spaces[row][col] = "  ";
               }
           }
-    }
-
-
-    public String getWinner()
-    {
-        return winner;
     }
 
     public void drawBoard()
@@ -93,17 +84,17 @@ public class Board
 
     public boolean checkWinner()
     {
-        if (checkRows() == true)
+        if (checkRows())
         {
             return true;
         }
 
-        if (checkColumns() == true)
+        if (checkColumns())
         {
             return true;
         }
 
-        if (checkDiagonals() == true)
+        if (checkDiagonals())
         {
             return true;
         }
@@ -121,7 +112,6 @@ public class Board
                    spaces[i][j + 1].equals(spaces[i][j + 2]) &&
                    spaces[i][j + 2].equals(spaces[i][j + 3]))
                 {
-                    winner = spaces[i][j];
                     return true;
                 }
             }
@@ -140,7 +130,6 @@ public class Board
                      spaces[i + 1][j].equals(spaces[i + 2][j]) &&
                      spaces[i + 2][j].equals(spaces[i + 3][j]))
                 {
-                    winner = spaces[i][j];
                     return true;
                 }
             }
@@ -159,7 +148,6 @@ public class Board
                      spaces[i + 1][j + 1].equals(spaces[i + 2][j + 2]) &&
                      spaces[i + 2][j + 2].equals(spaces[i + 3][j + 3]))
                 {
-                    winner = spaces[i][j];
                     return true;
                 }
             }
@@ -174,7 +162,6 @@ public class Board
                      spaces[i - 1][j + 1].equals(spaces[i - 2][j + 2]) &&
                      spaces[i - 2][j + 2].equals(spaces[i - 3][j + 3]))
                 {
-                    winner = spaces[i][j];
                     return true;
                 }
             }

@@ -51,7 +51,7 @@ public class ConnectFour
         {
             while(!player1Go)
             {
-                System.out.print("Player " + Player.RED + ("0") + Player.RESET_COLOR + "! Your turn: ");
+                System.out.print("Player " + players[0].getSymbol() + Player.RESET_COLOR + "! Your turn: ");
                 int chosenSpace = scan.nextInt();
                 player1Go = board.recordMove(chosenSpace, players[0]);
             }
@@ -61,7 +61,7 @@ public class ConnectFour
 
             if (board.checkWinner())
             {
-                System.out.println("Looks like we have a winner! And it's" + board.getWinner() + "!");
+                System.out.println("Looks like we have a winner! And it's " + players[0].getSymbol() + Player.RESET_COLOR + "!");
                 keepGoing = false;
                 checkWinner = true;
             }
@@ -75,7 +75,7 @@ public class ConnectFour
             {
                 while(!player2Go)
                 {
-                    System.out.print("Player " + Player.YELLOW + ("0") + Player.RESET_COLOR + "! Your turn: ");
+                    System.out.print("Player " + players[1].getSymbol() + Player.RESET_COLOR + "! Your turn: ");
                     int chosenSpace = scan.nextInt();
                     player2Go = board.recordMove(chosenSpace, players[1]);
                 }
@@ -85,7 +85,7 @@ public class ConnectFour
 
                 if (board.checkWinner())
                 {
-                    System.out.println("Looks like we have a winner! And it's" + board.getWinner() + "!");
+                    System.out.println("Looks like we have a winner! And it's " + players[1].getSymbol() + Player.RESET_COLOR + "!");
                     keepGoing = false;
                     checkWinner = true;
                 }
