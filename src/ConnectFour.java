@@ -11,6 +11,8 @@ public class ConnectFour
         setUp();
     }
 
+    boolean keepGoing = true;
+
     public void setUp()
     {
         System.out.println("--------------------------------------------------------");
@@ -42,59 +44,46 @@ public class ConnectFour
     public void playGame()
     {
         Scanner scan = new Scanner(System.in);
-        boolean player1Go = false;
-        boolean player2Go = false;
-        boolean keepGoing = true;
-        boolean checkWinner = false;
 
-        while (keepGoing)
+        while (keepGoing && !board.isFull())
         {
-            while(!player1Go)
+            for (int i = 0; i < players.length; i++)
             {
-                System.out.print("Player " + players[0].getSymbol() + Player.RESET_COLOR + "! Your turn: ");
-                int chosenSpace = scan.nextInt();
-                player1Go = board.recordMove(chosenSpace, players[0]);
-            }
-            player1Go = false;
-
-            board.drawBoard();
-
-            if (board.checkWinner())
-            {
-                System.out.println("Looks like we have a winner! And it's " + players[0].getSymbol() + Player.RESET_COLOR + "!");
-                keepGoing = false;
-                checkWinner = true;
-            }
-            else if (board.isFull())
-            {
-                keepGoing = false;
-                System.out.println("Looks like no one won this time! Try again!");
-            }
-
-            if (checkWinner == false)
-            {
-                while(!player2Go)
-                {
-                    System.out.print("Player " + players[1].getSymbol() + Player.RESET_COLOR + "! Your turn: ");
-                    int chosenSpace = scan.nextInt();
-                    player2Go = board.recordMove(chosenSpace, players[1]);
-                }
-                player2Go = false;
-
-                board.drawBoard();
-
-                if (board.checkWinner())
-                {
-                    System.out.println("Looks like we have a winner! And it's " + players[1].getSymbol() + Player.RESET_COLOR + "!");
-                    keepGoing = false;
-                    checkWinner = true;
-                }
-                if (board.isFull() && checkWinner == false)
+                if (turn(players[i]))
                 {
                     keepGoing = false;
-                    System.out.println("Looks like no one won this time! Try again!");
+                    break;
                 }
             }
         }
+
     }
+
+    public boolean turn(Player player)
+    {
+        Scanner scan = new Scanner(System.in);
+
+        boolean playerGo = false;
+
+        while(!playerGo)
+        {
+            System.out.print("Player " + player.getSymbol() + Player.RESET_COLOR + "! Your turn: ");
+            int chosenSpace = scan.nextInt();
+            playerGo = board.recordMove(chosenSpace, player);
+        }
+        board.drawBoard();
+
+        if (board.checkWinner())
+        {
+            System.out.println("Looks like we have a winner! And it's " + player.getSymbol() + Player.RESET_COLOR + "!");
+            return true;
+        }
+        if (board.isFull())
+        {
+            System.out.println("Looks like no one won this time! Try again!");
+            return true;
+        }
+        return false;
+    }
+
 }
