@@ -47,7 +47,8 @@ public class ConnectFour
         {
             for (Player player : players)
             {
-                if (turn(player)) {
+                if (turn(player))
+                {
                     keepGoing = false;
                     break;
                 }
@@ -82,5 +83,4 @@ public class ConnectFour
         }
         return false;
     }
-
 }

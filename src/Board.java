@@ -70,17 +70,17 @@ public class Board
         return false;
     }
 
-        public boolean isFull()
+    public boolean isFull()
+    {
+        for (int i = 0; i < boardSize; i++)
         {
-            for (int i = 0; i < boardSize; i++)
+            if (spaces[0][i].equals("  "))
             {
-                if (spaces[0][i].equals("  "))
-                {
-                  return false;
-                }
+              return false;
             }
-            return true;
         }
+        return true;
+    }
 
     public boolean checkWinner()
     {
