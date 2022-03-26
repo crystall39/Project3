@@ -43,14 +43,11 @@ public class ConnectFour
 
     public void playGame()
     {
-        Scanner scan = new Scanner(System.in);
-
         while (keepGoing && !board.isFull())
         {
-            for (int i = 0; i < players.length; i++)
+            for (Player player : players)
             {
-                if (turn(players[i]))
-                {
+                if (turn(player)) {
                     keepGoing = false;
                     break;
                 }
