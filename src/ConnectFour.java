@@ -1,3 +1,5 @@
+// Created by Crystal Ling
+
 import java.util.Scanner;
 
 public class ConnectFour
@@ -5,7 +7,14 @@ public class ConnectFour
     private Player[] players;
 
     private Board board;
-    
+
+    /**
+     * Introduces players into the Connect Four game
+     * Initializes players[] with the length of 2 for two players
+     * Creates two player objects and places them inside players[]
+     * Asks user for the board size, which must be 4 or more to be functional
+     * Creates and draws a new board based on the inputted board size
+     */
     public ConnectFour()
     {
         setUp();
@@ -41,6 +50,12 @@ public class ConnectFour
         board.drawBoard();
     }
 
+    /**
+     * A while loop that will end if the board is full or if a player wins
+     * The enhanced for loop will iterate between player 1 and player 2 in players[]
+     * When a player makes a move, and it is a winning move, turn(player) will be set to true
+     * That will cause the if statement to be true, which will make keepGoing false and break
+     */
     public void playGame()
     {
         while (keepGoing && !board.isFull())
@@ -54,9 +69,20 @@ public class ConnectFour
                 }
             }
         }
-
     }
 
+    /**
+     * This method is run when a player takes a turn
+     * Will, first, ask the player to pick a column for their move
+     * If that column is full, the player must pick another one
+     * If the column is not full, that player's colored piece would be placed and the board is drawn with their piece in the right place
+     * If the player made a winning move, a message will be printed and would return true
+     * If the board is full, a message will be printed and would return true
+     * Will return false otherwise
+     *
+     * @param player either player 1 or player 2
+     * @return true if the board is full or if a player makes a winning move, false if the player makes a normal move
+     */
     public boolean turn(Player player)
     {
         Scanner scan = new Scanner(System.in);

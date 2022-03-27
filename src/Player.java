@@ -1,5 +1,5 @@
-// class representing a Player;
-// each player has a unique symbol
+// Created by Crystal Ling
+
 public class Player
 {
 	public static final String YELLOW = "\033[0;33m";
