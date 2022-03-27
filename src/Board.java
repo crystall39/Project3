@@ -208,7 +208,7 @@ public class Board
      * j represents the column, which have to be three less from the right, or else there would be an out-of-bounds error
      * Checks to see if one item and the three items under and to the right of it are the same
      * Returns true if it is
-     * Otherwise, it iterates through any available rows and all columns for four matching pieces
+     * Otherwise, it iterates through any available rows and any available columns for four matching pieces
      * If none are found, return false
      *
      * For bottom left to top right diagonals, rows start at the board size and go down and columns start at 0 and go up([0][5], [1][4], [2][3], [3][2], etc.)
@@ -216,7 +216,7 @@ public class Board
      * j represents the column, which starts at 0 and has to be three less from the right side, or else there would be an out-of-bounds error
      * Checks to see if one item and the three items above and to the right of it are the same
      * Returns true if it is
-     * Otherwise, it iterates through any available rows and all columns for four matching pieces
+     * Otherwise, it iterates through any available rows and any available columns for four matching pieces
      * If none are found, return false
      * @return true if there is a winner, false if there is not
      */
