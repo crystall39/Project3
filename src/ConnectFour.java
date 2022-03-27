@@ -8,6 +8,8 @@ public class ConnectFour
 
     private Board board;
 
+    boolean keepGoing = true;
+
     /**
      * Introduces players into the Connect Four game
      * Initializes players[] with the length of 2 for two players
@@ -19,8 +21,6 @@ public class ConnectFour
     {
         setUp();
     }
-
-    boolean keepGoing = true;
 
     public void setUp()
     {

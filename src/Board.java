@@ -145,7 +145,7 @@ public class Board
     /**
      * Checks the rows (left to right) if there are 4 of the same pieces in a row
      * i represents the rows, which can be any
-     * j represents the column, which have to be three less from the right side, or else there would be an out-of-bounds error
+     * j represents the columns, which have to be three less from the right side, or else there would be an out-of-bounds error
      * Checks to see if one item and the three items to its right are the same
      * Returns true if it is
      * Otherwise, it iterates through all rows and any available columns for four matching pieces
@@ -174,7 +174,7 @@ public class Board
     /**
      * Checks the columns (up to down) if there are 4 of the same pieces in a row
      * i represents the rows, which have to be three less from the bottom, or else there would be an out-of-bounds error
-     * j represents the column, which can be any
+     * j represents the columns, which can be any
      * Checks to see if one item and the three items under it are the same
      * Returns true if it is
      * Otherwise, it iterates through any available rows and all columns for four matching pieces
@@ -205,7 +205,7 @@ public class Board
      *
      * For top left to bottom right diagonals, rows and columns are the same number ([0][0], [1][1], [2][2], etc.)
      * i represents the rows, which have to be three less from the bottom, or else there would be an out-of-bounds error
-     * j represents the column, which have to be three less from the right, or else there would be an out-of-bounds error
+     * j represents the columns, which have to be three less from the right, or else there would be an out-of-bounds error
      * Checks to see if one item and the three items under and to the right of it are the same
      * Returns true if it is
      * Otherwise, it iterates through any available rows and any available columns for four matching pieces
@@ -213,7 +213,7 @@ public class Board
      *
      * For bottom left to top right diagonals, rows start at the board size and go down and columns start at 0 and go up([0][5], [1][4], [2][3], [3][2], etc.)
      * i represents the rows, which starts at the board size and sve to stop at the 3rd row, or else there would be an out-of-bounds error
-     * j represents the column, which starts at 0 and has to be three less from the right side, or else there would be an out-of-bounds error
+     * j represents the columns, which starts at 0 and has to be three less from the right side, or else there would be an out-of-bounds error
      * Checks to see if one item and the three items above and to the right of it are the same
      * Returns true if it is
      * Otherwise, it iterates through any available rows and any available columns for four matching pieces
